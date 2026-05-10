@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.idea/
+.vscode/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+*.log
+.env
+.env.local
