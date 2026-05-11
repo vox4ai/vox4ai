@@ -9,6 +9,7 @@ description = "TTS 音声合成 CLI - say / save / list / test / --doctor"
 requires-python = ">=3.10"
 dependencies = [
     "tts-plugin-bridge",
+    "pyyaml>=6.0",
 ]
 license = {text = "MIT"}
 

@@ -2,15 +2,15 @@ import argparse
 import asyncio
 import shutil
 
-from tts_plugin_bridge import TTSSkill, ConnectorFactory
-from tts_plugin_bridge.protocol import ChunkConfig
+from tts_plugin_bridge import ConnectorFactory
 from tts_plugin_bridge.skill import (
     list_engines,
     synthesize_text,
     play_text,
     test_connection,
 )
-from typing import Optional
+
+from vox4ai.config import load as load_config, merge_cli, show as show_config
 
 _EPILOG = """
 使用例:
@@ -29,6 +29,7 @@ _COMMANDS = {
     "save": "テキストを音声ファイルに保存",
     "list": "利用可能なTTSプラグインを一覧表示",
     "test": "TTSエンジンへの接続をテスト",
+    "config": "現在の設定（config.yaml）を表示",
 }
 
 
@@ -79,6 +80,7 @@ async def _async_main():
 
     sub = parser.add_subparsers(dest="command", help="利用可能なコマンド")
     sub.add_parser("list", help="利用可能なTTSプラグインを一覧表示")
+    sub.add_parser("config", help="現在の設定表示")
 
     say_parser = sub.add_parser("say", help="テキストを読み上げる（ストリーミング優先）")
     say_parser.add_argument("text", help="読み上げるテキスト")
@@ -112,35 +114,41 @@ async def _async_main():
         parser.print_help()
         return 1
 
+    if args.command == "config":
+        print(show_config())
+        return 0
+
+    cfg = load_config()
+    if args.command in ("say", "save", "test"):
+        merged = merge_cli(cfg, args)
+
     engine_kwargs = {}
-    if hasattr(args, "server_url") and args.server_url:
-        engine_kwargs["server_url"] = args.server_url
+    if merged.get("server_url"):
+        engine_kwargs["server_url"] = merged["server_url"]
+
+    engine = merged.get("engine") or None
+    model = merged.get("model") or None
+    speed = merged.get("speed", 1.0)
+    volume = merged.get("volume")
+    pitch = merged.get("pitch")
+    style_id = merged.get("style_id")
 
     if args.command == "list":
         return await list_engines()
     elif args.command == "say":
         return await play_text(
-            args.text, getattr(args, "engine", None),
-            args.speed, getattr(args, "volume", None),
-            getattr(args, "pitch", None),
-            getattr(args, "style_id", None),
-            getattr(args, "model", None),
-            engine_kwargs,
+            args.text, engine, speed, volume, pitch,
+            style_id, model, engine_kwargs,
         )
     elif args.command == "save":
         return await synthesize_text(
-            args.text, getattr(args, "engine", None),
-            args.speed, getattr(args, "volume", None),
-            getattr(args, "pitch", None),
-            getattr(args, "style_id", None),
-            getattr(args, "output", None),
+            args.text, engine, speed, volume, pitch,
+            style_id, getattr(args, "output", None),
             engine_kwargs, False, getattr(args, "play", False),
         )
     elif args.command == "test":
         return await test_connection(
-            getattr(args, "engine", None),
-            getattr(args, "style_id", None),
-            engine_kwargs,
+            engine, style_id, engine_kwargs,
         )
     else:
         parser.print_help()
