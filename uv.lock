@@ -1028,6 +1028,7 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "tts-plugin-aivisspeech" },
     { name = "tts-plugin-edgetts" },
+    { name = "vox4ai-skill" },
 ]
 
 [package.metadata]
@@ -1036,6 +1037,7 @@ requires-dist = [
     { name = "pydantic-settings", specifier = ">=2.0" },
     { name = "tts-plugin-aivisspeech", directory = "../tts-plugin-aivisspeech" },
     { name = "tts-plugin-edgetts", directory = "../tts-plugin-edgetts" },
+    { name = "vox4ai-skill", editable = "../vox4ai-skill" },
 ]
 
 [package.metadata.requires-dev]
@@ -1095,6 +1097,7 @@ source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
     { name = "tts-plugin-bridge" },
+    { name = "vox4ai-skill" },
 ]
 
 [package.dev-dependencies]
@@ -1107,6 +1110,29 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
+    { name = "tts-plugin-bridge", editable = "../tts-plugin-bridge" },
+    { name = "vox4ai-skill", editable = "../vox4ai-skill" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "pytest-asyncio", specifier = ">=1.3.0" },
+    { name = "ruff", specifier = ">=0.15.12" },
+]
+
+[[package]]
+name = "vox4ai-skill"
+version = "0.1.0"
+source = { editable = "../vox4ai-skill" }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "tts-plugin-bridge" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aiohttp" },
     { name = "tts-plugin-bridge", editable = "../tts-plugin-bridge" },
 ]
 

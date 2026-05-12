@@ -3,7 +3,7 @@ import asyncio
 import shutil
 
 from tts_plugin_bridge import ConnectorFactory
-from tts_plugin_bridge.skill import (
+from vox4ai_skill.api import (
     list_engines,
     synthesize_text,
     play_text,
