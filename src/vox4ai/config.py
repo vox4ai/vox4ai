@@ -1,11 +1,9 @@
+import argparse
 import os
 from pathlib import Path
 from typing import Any
 
-try:
-    import yaml
-except ImportError:  # pragma: no cover
-    yaml = None
+import yaml
 
 
 def _config_dir() -> Path:
@@ -40,8 +38,6 @@ def load() -> dict[str, Any]:
     path = _config_path()
     if not path.exists():
         return cfg
-    if yaml is None:
-        return cfg
     try:
         raw = yaml.safe_load(path.read_text())
         if isinstance(raw, dict):
@@ -60,7 +56,7 @@ def show() -> str:
     return path.read_text().strip() or "(empty)"
 
 
-def merge_cli(cfg: dict[str, Any], args) -> dict[str, Any]:
+def merge_cli(cfg: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
     """CLI args override config values. Returns merged copy."""
     merged = dict(cfg)
     cli_map = {
