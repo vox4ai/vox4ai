@@ -9,7 +9,7 @@ description = "TTS 音声合成 CLI - say / save / list / test / --doctor"
 requires-python = ">=3.10"
 dependencies = [
     "tts-plugin-bridge",
-    "vox4ai-skill",
+    "vox4ai-skill-lib",
     "pyyaml>=6.0",
 ]
 license = {text = "MIT"}
@@ -19,7 +19,7 @@ vox4ai = "vox4ai.cli:main"
 
 [tool.uv.sources]
 tts-plugin-bridge = { path = "../tts-plugin-bridge", editable = true }
-vox4ai-skill = { path = "../vox4ai-skill", editable = true }
+vox4ai-skill-lib = { path = "../vox4ai-skill-lib", editable = true }
 
 [dependency-groups]
 dev = [
