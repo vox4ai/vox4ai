@@ -16,12 +16,24 @@ def reset_argv():
 
 
 class TestCommandsFlag:
-    def test_prints_all_subcommands(self, capsys):
+    @patch("vox4ai.cli.ConnectorFactory.list_available")
+    def test_prints_all_subcommands_and_engines(self, mock_list, capsys):
+        mock_list.return_value = ["edgetts", "aivisspeech"]
         sys.argv = ["vox4ai", "--commands"]
         assert main() == 0
         captured = capsys.readouterr()
         for cmd in ("say", "save", "list", "test", "config"):
             assert cmd in captured.out
+        assert "edgetts" in captured.out
+        assert "aivisspeech" in captured.out
+
+    @patch("vox4ai.cli.ConnectorFactory.list_available")
+    def test_commands_no_engines(self, mock_list, capsys):
+        mock_list.return_value = []
+        sys.argv = ["vox4ai", "--commands"]
+        assert main() == 0
+        captured = capsys.readouterr()
+        assert "none found" in captured.out
 
 
 class TestHelpFlag:
