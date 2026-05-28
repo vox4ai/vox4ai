@@ -1,4 +1,0 @@
-[tool.mutmut]
-paths_to_mutate = "src/vox4ai/"
-tests_dir = "tests/"
-backup = false
