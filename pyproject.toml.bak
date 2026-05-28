@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vox4ai"
+version = "0.1.0"
+description = "TTS 音声合成 CLI - say / save / list / test / --doctor"
+requires-python = ">=3.10"
+dependencies = [
+    "tts-plugin-bridge",
+    "vox4ai-skill-lib",
+    "pyyaml>=6.0",
+    "pydantic-settings>=2.14.1",
+]
+license = {text = "MIT"}
+
+[project.scripts]
+vox4ai = "vox4ai.cli:main"
+
+[tool.uv.sources]
+tts-plugin-bridge = { path = "../tts-plugin-bridge", editable = true }
+vox4ai-skill-lib = { path = "../vox4ai-skill-lib", editable = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+    "ruff>=0.15.12",
+]
+
+[tool.mutmut]
+tests_dir = ["-k", "config", "tests/"]
