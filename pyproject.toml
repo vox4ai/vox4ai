@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "vox4ai", email = "vox4ai@example.com"},
+    {name = "utenadev", email = "utena.cross+pypi@gmail.com"},
 ]
 keywords = ["tts", "tts-plugin-bridge", "edgetts", "voice", "speech", "synthesis", "cli", "vox4ai"]
 classifiers = [
