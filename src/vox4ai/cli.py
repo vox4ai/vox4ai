@@ -140,6 +140,8 @@ async def _async_main():
     cfg = load_config()
     if args.command in ("say", "save", "test"):
         merged = merge_cli(cfg, args)
+    else:
+        merged = {}
 
     engine_kwargs = {}
     if merged.get("server_url"):

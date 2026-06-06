@@ -22,7 +22,7 @@
 ## 🚀 Overview
 
 TTS 音声合成 CLI。`tts-plugin-bridge` のプラグインシステムに対応した TTS Engine を
-統一的に操作できます。
+統一的に操作できます。`vox` と `vox4ai` 両方のコマンド名でインストールされます。
 
 ## 📦 Installation
 
@@ -30,32 +30,46 @@ TTS 音声合成 CLI。`tts-plugin-bridge` のプラグインシステムに対�
 uv add vox4ai
 ```
 
-## 🛠 Usage
+インストールするだけで `tts-plugin-bridge` + `tts-plugin-edgetts`（クラウドデフォルト）が
+入り、追加のローカルサーバーなしで音声合成を試せます。
+
+他の TTS エンジンを追加する場合：
 
 ```bash
-# テキストを読み上げる（設定ファイルの engine が使われる）
-vox4ai say "こんにちは"
+uv add tts-plugin-aivisspeech   # AivisSpeech Engine
+uv add tts-plugin-piperplus     # Piper Plus (HTTP server)
+uv add tts-plugin-voisonatalk   # VoiSona Talk
+uv add tts-plugin-kokoro        # Kokoro (local)
+```
 
-# engine を明示指定（CLI 引数は設定より優先）
-vox4ai say "こんにちは" -e edgetts
+## 🛠 Usage
+
+`vox` と `vox4ai` は同義。短い `vox` を推奨。
+
+```bash
+# テキストを読み上げる（デフォルト: edgetts）
+vox "こんにちは"
 
 # 音声ファイルに保存
-vox4ai save "こんにちは" -o output.wav
+vox save "こんにちは" -o output.wav
 
-# 利用可能なTTSEngine 一覧
-vox4ai list
+# engine を明示指定
+vox "こんにちは" -e aivisspeech --style-id 888753760
+
+# 利用可能な TTS エンジン一覧
+vox list
 
 # 接続テスト
-vox4ai test -e aivisspeech --server-url http://localhost:10101 --style-id 888753760
+vox test -e aivisspeech --server-url http://localhost:10101
 
 # 環境診断
-vox4ai --doctor
+vox --doctor
 
-# 現在の設定を表示
-vox4ai config
+# 現在の設定
+vox config
 
 # サブコマンド一覧
-vox4ai --commands
+vox --commands
 ```
 
 ## ⚙️ Configuration
@@ -98,7 +112,9 @@ style_id: 888753760
 ## 📦 Dependencies
 
 - `tts-plugin-bridge` — コアフレームワーク
-- 任意の TTS プラグイン (`tts-plugin-edgetts`, `tts-plugin-aivisspeech` など)
+- `tts-plugin-edgetts` — Microsoft Edge TTS（クラウド、デフォルト）
+- `vox4ai-skill-lib` — 内部ライブラリ
+- 任意の TTS プラグイン (`tts-plugin-aivisspeech`, `tts-plugin-piperplus` など)
 
 ## 📜 License
 
