@@ -1611,14 +1611,12 @@ source = { editable = "../tts-plugin-bridge" }
 dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
-    { name = "vox4ai-skill-lib" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pydantic", specifier = ">=2.0" },
     { name = "pydantic-settings", specifier = ">=2.0" },
-    { name = "vox4ai-skill-lib", editable = "../vox4ai-skill-lib" },
 ]
 
 [package.metadata.requires-dev]
@@ -1629,6 +1627,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "ruff", specifier = ">=0.15.12" },
     { name = "twine", specifier = ">=6.0" },
+    { name = "vox4ai-skill-lib", editable = "../vox4ai-skill-lib" },
 ]
 
 [[package]]
