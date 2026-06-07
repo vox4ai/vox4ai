@@ -26,6 +26,22 @@ TTS 音声合成 CLI。`tts-plugin-bridge` のプラグインシステムに対�
 
 ## 📦 Installation
 
+### CLI として使う (推奨)
+
+`vox` / `vox4ai` コマンドをシステム全体で使いたい場合:
+
+```bash
+# uv tool を使う場合
+uv tool install vox4ai
+# → パスが通っていれば `vox` / `vox4ai` コマンドが直接使える
+
+# pipx を使う場合
+pipx install vox4ai
+# → 隔離された venv にインストールされ、`vox` / `vox4ai` が使える
+```
+
+### プロジェクト依存として使う
+
 ```bash
 uv add vox4ai
 ```
@@ -33,7 +49,7 @@ uv add vox4ai
 インストールするだけで `tts-plugin-bridge` + `tts-plugin-edgetts`（クラウドデフォルト）が
 入り、追加のローカルサーバーなしで音声合成を試せます。
 
-他の TTS エンジンを追加する場合：
+### 他の TTS エンジンを追加
 
 ```bash
 uv add tts-plugin-aivisspeech   # AivisSpeech Engine
